@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Galería | Band of Brothers</title>
+  <meta name="description"
+        content="Galería de imágenes de Band of Brothers: escenarios y momentos de la campaña, con filtros por etapa (entrenamiento, Normandía, Países Bajos, Bastogne, Alemania) y ampliación en ventana modal." />
+  <meta name="keywords"
+        content="Band of Brothers galería, imágenes, Currahee, Brécourt, Carentan, Eindhoven, Bastogne, Foy, Berchtesgaden" />
+  <meta name="author" content="Prototipo web - Band of Brothers" />
+  <meta name="theme-color" content="#1a1c12" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Galería | Band of Brothers" />
+  <meta property="og:description" content="Momentos y escenarios de la campaña, con filtros y modal." />
+  <meta property="og:image" content="img/og-image.svg" />
+  <meta property="og:url" content="https://example.com/band-of-brothers/galeria.html" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="estilos/estilos.css" />
+  <link rel="icon" type="image/svg+xml" href="img/logo.svg" />
+</head>
+
+<body>
+  <a class="salto-contenido" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <!-- ============================================================ HEADER (idéntico en todas las páginas) ============================================================ -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__interior">
+      <a class="marca" href="index.html" aria-label="Band of Brothers - ir al inicio">
+        <img src="img/logo.avif" alt="Emblema de la Compañía Easy, 506.º PIR" class="marca__logo" width="120" height="36" />
+        <span class="marca__texto"></span>
+      </a>
+
+      <button class="hamburguesa" id="btnMenu" type="button"
+              aria-label="Abrir menú de navegación" aria-controls="menuPrincipal" aria-expanded="false">
+        <span class="hamburguesa__barra"></span>
+        <span class="hamburguesa__barra"></span>
+        <span class="hamburguesa__barra"></span>
+      </button>
+
+      <nav class="navegacion" aria-label="Navegación principal">
+        <ul class="menu" id="menuPrincipal">
+          <li class="menu__item menu__item--drop">
+            <div class="menu__fila">
+              <a href="capitulos.html" class="menu__enlace">Capítulos</a>
+              <button type="button" class="submenu__toggle" aria-expanded="false"
+                      aria-controls="submenuCapitulos" aria-label="Mostrar lista de capítulos">
+                <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu" id="submenuCapitulos" aria-label="Capítulos de la serie">
+              <li><a href="capitulos.html#cap-1"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">01</span> Currahee</a></li>
+              <li><a href="capitulos.html#cap-2"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">02</span> El día de días</a></li>
+              <li><a href="capitulos.html#cap-3"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">03</span> Carentan</a></li>
+              <li><a href="capitulos.html#cap-4"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">04</span> Reemplazos</a></li>
+              <li><a href="capitulos.html#cap-5"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">05</span> Encrucijada</a></li>
+              <li><a href="capitulos.html#cap-6"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">06</span> Bastogne</a></li>
+              <li><a href="capitulos.html#cap-7"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">07</span> El punto de ruptura</a></li>
+              <li><a href="capitulos.html#cap-8"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">08</span> La última patrulla</a></li>
+              <li><a href="capitulos.html#cap-9"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">09</span> Por qué luchamos</a></li>
+              <li><a href="capitulos.html#cap-10" class="submenu__enlace"><span class="submenu__num" aria-hidden="true">10</span> Puntos</a></li>
+            </ul>
+          </li>
+          <li class="menu__item"><a href="historia.html" class="menu__enlace">Historia</a></li>
+          <li class="menu__item"><a href="galeria.html" class="menu__enlace">Galería</a></li>
+          <li class="menu__item"><a href="contacto.html" class="menu__enlace">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================ CONTENIDO ============================================================ -->
+  <main id="contenido-principal" class="pagina pagina--oscura">
+
+    <section class="seccion seccion--oscura" aria-labelledby="galeria-titulo">
+      <div class="contenedor">
+        <header class="seccion__cabecera">
+          <h1 class="seccion__titulo" id="galeria-titulo">Galería</h1>
+          <p class="seccion__intro">Momentos y escenarios de la campaña. Usa los filtros o pulsa una imagen para ampliarla.</p>
+        </header>
+
+        <!-- Filtros: JavaScript muestra/oculta las figuras según data-categoria -->
+        <div class="filtros" role="group" aria-label="Filtrar galería por etapa">
+          <button class="filtro filtro--activo" type="button" data-filtro="todas" aria-pressed="true">Todas</button>
+          <button class="filtro" type="button" data-filtro="entrenamiento" aria-pressed="false">Entrenamiento</button>
+          <button class="filtro" type="button" data-filtro="normandia" aria-pressed="false">Normandía</button>
+          <button class="filtro" type="button" data-filtro="holanda" aria-pressed="false">Países Bajos</button>
+          <button class="filtro" type="button" data-filtro="bastogne" aria-pressed="false">Bastogne</button>
+          <button class="filtro" type="button" data-filtro="alemania" aria-pressed="false">Alemania</button>
+        </div>
+
+        <!-- Rejilla de imágenes (CSS Grid). Cada elemento es <figure> con botón accesible. -->
+        <div class="rejilla-galeria" id="rejillaGaleria">
+
+          <figure class="galeria__item" data-categoria="entrenamiento">
+            <button class="galeria__disparador" type="button"
+                    data-img="img/galeria-01.svg" data-titulo="Currahee — Instrucción en Toccoa">
+              <img src="img/galeria-01.svg" alt="Paracaidistas corriendo por la ladera del monte Currahee durante la instrucción." loading="lazy" width="800" height="600" />
+            </button>
+            <figcaption>Currahee — Instrucción en Toccoa</figcaption>
+          </figure>
+
+          <figure class="galeria__item" data-categoria="entrenamiento">
+            <button class="galeria__disparador" type="button"
+                    data-img="img/galeria-02.svg" data-titulo="Aldbourne — Preparativos en Inglaterra">
+              <img src="img/galeria-02.svg" alt="Campamento de la Compañía Easy en Aldbourne, Inglaterra, antes del Día D." loading="lazy" width="800" height="600" />
+            </button>
+            <figcaption>Aldbourne — Preparativos en Inglaterra</figcaption>
+          </figure>
+
+          <figure class="galeria__item" data-categoria="normandia">
+            <button class="galeria__disparador" type="button"
+                    data-img="img/galeria-03.svg" data-titulo="Brécourt Manor — Asalto del Día D">
+              <img src="img/galeria-03.svg" alt="Asalto a la batería de artillería alemana en Brécourt Manor, Normandía." loading="lazy" width="800" height="600" />
+            </button>
+            <figcaption>Brécourt Manor — Asalto del Día D</figcaption>
+          </figure>
+
+          <figure class="galeria__item" data-categoria="normandia">
+            <button class="galeria__disparador" type="button"
+                    data-img="img/galeria-04.svg" data-titulo="Carentan — Combate urbano">
+              <img src="img/galeria-04.svg" alt="Combate calle a calle durante la toma de Carentan." loading="lazy" width="800" height="600" />
+            </button>
+            <figcaption>Carentan — Combate urbano</figcaption>
+          </figure>
+
+          <figure class="galeria__item" data-categoria="holanda">
+            <button class="galeria__disparador" type="button"
+                    data-img="img/galeria-05.svg" data-titulo="Eindhoven — Operación Market Garden">
+              <img src="img/galeria-05.svg" alt="Entrada en Eindhoven durante la Operación Market Garden." loading="lazy" width="800" height="600" />
+            </button>
+            <figcaption>Eindhoven — Operación Market Garden</figcaption>
+          </figure>
+
+          <figure class="galeria__item" data-categoria="holanda">
+            <button class="galeria__disparador" type="button"
+                    data-img="img/galeria-06.svg" data-titulo="Isla de Nijmegen — Puesto de avanzada">
+              <img src="img/galeria-06.svg" alt="Puesto de avanzada en el dique de la isla de Nijmegen." loading="lazy" width="800" height="600" />
+            </button>
+            <figcaption>Isla de Nijmegen — Puesto de avanzada</figcaption>
+          </figure>
+
+          <figure class="galeria__item" data-categoria="bastogne">
+            <button class="galeria__disparador" type="button"
+                    data-img="img/galeria-07.svg" data-titulo="Bois Jacques — El cerco de Bastogne">
+              <img src="img/galeria-07.svg" alt="Pozos de tirador cubiertos de nieve en el bosque de Bois Jacques, Bastogne." loading="lazy" width="800" height="600" />
+            </button>
+            <figcaption>Bois Jacques — El cerco de Bastogne</figcaption>
+          </figure>
+
+          <figure class="galeria__item" data-categoria="bastogne">
+            <button class="galeria__disparador" type="button"
+                    data-img="img/galeria-08.svg" data-titulo="Foy — El asalto final">
+              <img src="img/galeria-08.svg" alt="Avance a campo abierto durante el asalto al pueblo de Foy." loading="lazy" width="800" height="600" />
+            </button>
+            <figcaption>Foy — El asalto final</figcaption>
+          </figure>
+
+          <figure class="galeria__item" data-categoria="alemania">
+            <button class="galeria__disparador" type="button"
+                    data-img="img/galeria-09.svg" data-titulo="Nido del Águila — Berchtesgaden">
+              <img src="img/galeria-09.svg" alt="Vista del Kehlsteinhaus (Nido del Águila) en Berchtesgaden, Alemania." loading="lazy" width="800" height="600" />
+            </button>
+            <figcaption>Nido del Águila — Berchtesgaden</figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================ FOOTER (idéntico en todas las páginas) ============================================================ -->
+  <footer class="pie" role="contentinfo">
+    <div class="contenedor pie__interior">
+
+      <nav class="pie__mapa" aria-label="Mapa del sitio">
+        <div class="pie__columna">
+          <h2 class="pie__titulo">Navegación</h2>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="capitulos.html">Capítulos</a></li>
+            <li><a href="historia.html">Historia</a></li>
+            <li><a href="galeria.html">Galería</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="pie__columna pie__columna--capitulos">
+          <h2 class="pie__titulo">Capítulos</h2>
+          <ul>
+            <li><a href="capitulos.html#cap-1">01 Currahee</a></li>
+            <li><a href="capitulos.html#cap-2">02 El día de días</a></li>
+            <li><a href="capitulos.html#cap-3">03 Carentan</a></li>
+            <li><a href="capitulos.html#cap-4">04 Reemplazos</a></li>
+            <li><a href="capitulos.html#cap-5">05 Encrucijada</a></li>
+            <li><a href="capitulos.html#cap-6">06 Bastogne</a></li>
+            <li><a href="capitulos.html#cap-7">07 El punto de ruptura</a></li>
+            <li><a href="capitulos.html#cap-8">08 La última patrulla</a></li>
+            <li><a href="capitulos.html#cap-9">09 Por qué luchamos</a></li>
+            <li><a href="capitulos.html#cap-10">10 Puntos</a></li>
+          </ul>
+        </div>
+
+        <div class="pie__columna">
+          <h2 class="pie__titulo">Síguenos</h2>
+          <ul class="redes" aria-label="Redes sociales">
+            <li><a href="#" class="redes__enlace" aria-label="Perfil en X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="#" class="redes__enlace" aria-label="Página en Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a></li>
+            <li><a href="#" class="redes__enlace" aria-label="Perfil en Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
+            <li><a href="#" class="redes__enlace" aria-label="Canal en YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="pie__base">
+        <p class="pie__creditos">
+          &copy; <span id="anio">2026</span> Prototipo web &laquo;Band of Brothers&raquo;.
+          Proyecto académico sin ánimo de lucro. Todas las marcas y el material audiovisual
+          pertenecen a sus respectivos titulares (HBO / DreamWorks / Playtone).
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       MODAL DE LA GALERÍA (solo en esta página; oculto con [hidden])
+       ============================================================ -->
+  <div class="modal" id="modalGaleria" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" hidden>
+    <div class="modal__fondo" data-cerrar-modal></div>
+    <figure class="modal__caja">
+      <button class="modal__cerrar" type="button" aria-label="Cerrar imagen ampliada" data-cerrar-modal>
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <img class="modal__img" id="modalImg" src="" alt="" />
+      <figcaption class="modal__pie" id="modalTitulo"></figcaption>
+    </figure>
+  </div>
+
+  <script src="js/script.js" defer></script>
+</body>
+</html>

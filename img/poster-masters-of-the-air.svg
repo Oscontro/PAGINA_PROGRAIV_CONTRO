@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="750" viewBox="0 0 500 750" role="img" aria-label="Poster ilustrativo de la miniserie Masters of the Air">
+  <!-- Marcador de posicion tipo cartel de cine. Sustituir por poster oficial con el mismo nombre de archivo. -->
+  <defs>
+    <linearGradient id="gmo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3d4a56"/>
+      <stop offset="0.55" stop-color="#1a1c12"/>
+      <stop offset="1" stop-color="#0e0f0a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="750" fill="url(#gmo)"/>
+  <rect x="14" y="14" width="472" height="722" fill="none" stroke="#c9a227" stroke-width="3" opacity="0.55"/>
+
+  <!-- estelas de vuelo -->
+  <path d="M-20 210 L520 270" stroke="#e8e2d0" stroke-width="2" opacity="0.22"/>
+  <path d="M-20 270 L520 330" stroke="#e8e2d0" stroke-width="2" opacity="0.16"/>
+  <path d="M-20 150 L520 200" stroke="#e8e2d0" stroke-width="2" opacity="0.12"/>
+
+  <!-- formacion de bombarderos, esquematica -->
+  <g fill="#0e0f0a" opacity="0.75">
+    <rect x="232" y="300" width="36" height="132" rx="8"/>
+    <rect x="130" y="352" width="240" height="16" rx="7"/>
+    <rect x="208" y="416" width="84" height="12" rx="5"/>
+  </g>
+  <g fill="#0e0f0a" opacity="0.45">
+    <rect x="112" y="250" width="24" height="90" rx="6"/>
+    <rect x="60" y="288" width="150" height="10" rx="5"/>
+  </g>
+  <g fill="#0e0f0a" opacity="0.45">
+    <rect x="364" y="250" width="24" height="90" rx="6"/>
+    <rect x="340" y="288" width="150" height="10" rx="5"/>
+  </g>
+
+  <text x="250" y="128" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="18" letter-spacing="4" fill="#c9a227">8.&#170; FUERZA AEREA</text>
+  <text x="250" y="606" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" font-weight="700" fill="#f4f1e6">MASTERS</text>
+  <text x="250" y="648" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" font-weight="700" fill="#f4f1e6">OF THE AIR</text>
+  <text x="250" y="684" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="16" fill="#e8e2d0" opacity="0.85">Bombarderos B-17 sobre Europa</text>
+</svg>

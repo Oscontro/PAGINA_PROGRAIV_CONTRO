@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Band of Brothers - tarjeta para redes sociales">
+  <!-- Imagen para Open Graph (previsualizacion al compartir el enlace).
+       En produccion se recomienda exportar a PNG/JPG y usar una URL absoluta. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b421d"/>
+      <stop offset="1" stop-color="#0e0f0a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#c9a227" stroke-width="4" opacity="0.6"/>
+  <text x="600" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="86"
+        letter-spacing="10" fill="#e8e2d0">BAND OF BROTHERS</text>
+  <text x="600" y="370" text-anchor="middle" font-family="Georgia, serif" font-size="30"
+        letter-spacing="6" fill="#c9a227">EASY COMPANY &#183; 506 PIR &#183; 101 AIRBORNE</text>
+</svg>

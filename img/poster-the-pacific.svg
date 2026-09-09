@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="750" viewBox="0 0 500 750" role="img" aria-label="Poster ilustrativo de la miniserie The Pacific">
+  <!-- Marcador de posicion tipo cartel de cine. Sustituir por poster oficial con el mismo nombre de archivo. -->
+  <defs>
+    <linearGradient id="gtp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b3a06b"/>
+      <stop offset="0.55" stop-color="#4b5320"/>
+      <stop offset="1" stop-color="#0e0f0a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="750" fill="url(#gtp)"/>
+  <rect x="14" y="14" width="472" height="722" fill="none" stroke="#c9a227" stroke-width="3" opacity="0.55"/>
+
+  <!-- sol / horizonte -->
+  <circle cx="250" cy="220" r="72" fill="#f4f1e6" opacity="0.14"/>
+  <path d="M0 440 Q250 392 500 440 L500 750 L0 750 Z" fill="#0e0f0a" opacity="0.55"/>
+  <path d="M0 486 Q250 448 500 486 L500 750 L0 750 Z" fill="#0e0f0a" opacity="0.55"/>
+
+  <!-- palmeras esquematicas -->
+  <g fill="#0e0f0a" opacity="0.65">
+    <path d="M88 486 C 76 442 34 420 14 424 C 52 430 74 452 84 480 Z"/>
+    <path d="M88 486 C 100 436 144 414 170 414 C 132 424 106 448 96 480 Z"/>
+    <path d="M88 486 C 60 452 30 452 16 460 C 46 456 68 466 84 484 Z"/>
+    <rect x="83" y="486" width="9" height="86" rx="3"/>
+  </g>
+
+  <text x="250" y="128" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="18" letter-spacing="6" fill="#c9a227">HBO &#183; MINISERIE</text>
+  <text x="250" y="636" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700" fill="#f4f1e6">THE PACIFIC</text>
+  <text x="250" y="672" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="18" fill="#e8e2d0" opacity="0.85">Teatro del Pacifico &#183; 1942-1945</text>
+</svg>

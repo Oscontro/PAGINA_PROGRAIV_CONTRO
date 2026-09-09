@@ -1,0 +1,35 @@
+Actúa como un desarrollador Frontend Senior. Necesito que crees el prototipo web completo (HTML5, CSS3 y JavaScript vanilla) de una sola página (SPA o maquetado base) dedicada a la miniserie "Band of Brothers".
+
+Crear carpetas /img para las imágenes, /js para JavaScript y una /estilos para "estilos.css". Los archivos que contengan comentarios de funcionamiento y aclaratorio para que sea legible.
+
+Requisitos Técnicos:
+
+HTML5 Semántico: Uso correcto de etiquetas (<header>, <nav>, <main>, <section>, <article>, <footer>) y atributos de accesibilidad básica (aria-label, alt en imágenes).
+
+SEO Básico: Incluir metaetiquetas clave (title, description, keywords, viewport, Open Graph básico).
+
+Diseño Responsive: Layout adaptativo (Mobile First o Desktop First con Media Queries) usando Flexbox y CSS Grid.
+
+CSS3 Moderno: Variables CSS para la paleta de colores (tonos sobrios/militares: caqui, gris oscuro, verde oliva, negro), tipografía similar al que usan en la serie y transiciones suaves.
+
+JavaScript Vanilla: Lógica sencilla para un menú hamburguesa interactivo en pantallas pequeñas y funcionalidad básica de filtrado o modal en la galería.
+
+Estructura de la Página (index.html):
+
+Header / Navegación:
+
+Izquierda: Logo o título estilizado de la serie ("Band of Brothers").
+
+Derecha: Menú con los enlaces: Capítulos, Galería y Contacto.
+
+Sección Héroe (Hero): Imagen de fondo representativa con el título principal y una breve sinopsis.
+
+Sección Capítulos: Grid o lista de tarjetas con los episodios clave (número, título y breve descripción).
+
+Sección Galería: Grid interactivo de imágenes relacionadas con la serie.
+
+Sección Contacto: Formulario básico (nombre, email, mensaje) maquetado con validación simple.
+
+Footer: Derechos de autor y enlaces a redes sociales (con logos sacalos de Fonts Awesome) o créditos.
+
+Entrégame el código organizado en bloques limpios: index.html, styles.css y script.js.

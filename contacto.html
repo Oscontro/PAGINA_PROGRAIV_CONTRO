@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Contacto | Band of Brothers</title>
+  <meta name="description"
+        content="Formulario de contacto del sitio Band of Brothers: envía sugerencias, correcciones históricas o material para la galería. Validación sencilla en el navegador." />
+  <meta name="keywords"
+        content="Band of Brothers contacto, formulario, sugerencias, correcciones" />
+  <meta name="author" content="Prototipo web - Band of Brothers" />
+  <meta name="theme-color" content="#1a1c12" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Contacto | Band of Brothers" />
+  <meta property="og:description" content="Escríbenos: sugerencias, correcciones históricas o material para la galería." />
+  <meta property="og:image" content="img/og-image.svg" />
+  <meta property="og:url" content="https://example.com/band-of-brothers/contacto.html" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="estilos/estilos.css" />
+  <link rel="icon" type="image/svg+xml" href="img/logo.svg" />
+</head>
+
+<body>
+  <a class="salto-contenido" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <!-- ============================================================ HEADER (idéntico en todas las páginas) ============================================================ -->
+  <header class="cabecera">
+    <div class="contenedor cabecera__interior">
+      <a class="marca" href="index.html" aria-label="Band of Brothers - ir al inicio">
+        <img src="img/logo.avif" alt="Emblema de la Compañía Easy, 506.º PIR" class="marca__logo" width="120" height="36" />
+        <span class="marca__texto"></span>
+      </a>
+
+      <button class="hamburguesa" id="btnMenu" type="button"
+              aria-label="Abrir menú de navegación" aria-controls="menuPrincipal" aria-expanded="false">
+        <span class="hamburguesa__barra"></span>
+        <span class="hamburguesa__barra"></span>
+        <span class="hamburguesa__barra"></span>
+      </button>
+
+      <nav class="navegacion" aria-label="Navegación principal">
+        <ul class="menu" id="menuPrincipal">
+          <li class="menu__item menu__item--drop">
+            <div class="menu__fila">
+              <a href="capitulos.html" class="menu__enlace">Capítulos</a>
+              <button type="button" class="submenu__toggle" aria-expanded="false"
+                      aria-controls="submenuCapitulos" aria-label="Mostrar lista de capítulos">
+                <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+              </button>
+            </div>
+            <ul class="submenu" id="submenuCapitulos" aria-label="Capítulos de la serie">
+              <li><a href="capitulos.html#cap-1"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">01</span> Currahee</a></li>
+              <li><a href="capitulos.html#cap-2"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">02</span> El día de días</a></li>
+              <li><a href="capitulos.html#cap-3"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">03</span> Carentan</a></li>
+              <li><a href="capitulos.html#cap-4"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">04</span> Reemplazos</a></li>
+              <li><a href="capitulos.html#cap-5"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">05</span> Encrucijada</a></li>
+              <li><a href="capitulos.html#cap-6"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">06</span> Bastogne</a></li>
+              <li><a href="capitulos.html#cap-7"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">07</span> El punto de ruptura</a></li>
+              <li><a href="capitulos.html#cap-8"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">08</span> La última patrulla</a></li>
+              <li><a href="capitulos.html#cap-9"  class="submenu__enlace"><span class="submenu__num" aria-hidden="true">09</span> Por qué luchamos</a></li>
+              <li><a href="capitulos.html#cap-10" class="submenu__enlace"><span class="submenu__num" aria-hidden="true">10</span> Puntos</a></li>
+            </ul>
+          </li>
+          <li class="menu__item"><a href="historia.html" class="menu__enlace">Historia</a></li>
+          <li class="menu__item"><a href="galeria.html" class="menu__enlace">Galería</a></li>
+          <li class="menu__item"><a href="contacto.html" class="menu__enlace">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================ CONTENIDO ============================================================ -->
+  <main id="contenido-principal" class="pagina">
+
+    <section class="seccion" aria-labelledby="contacto-titulo">
+      <div class="contenedor contacto__interior">
+        <header class="seccion__cabecera">
+          <h1 class="seccion__titulo" id="contacto-titulo">Contacto</h1>
+          <p class="seccion__intro">¿Sugerencias, correcciones históricas o material para la galería? Escríbenos.</p>
+        </header>
+
+        <!-- novalidate: desactiva la validación nativa para usar la propia (JS). -->
+        <form class="formulario" id="formContacto" novalidate>
+          <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" autocomplete="name"
+                   required minlength="2" aria-describedby="error-nombre" />
+            <span class="campo__error" id="error-nombre" role="alert"></span>
+          </div>
+
+          <div class="campo">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" autocomplete="email"
+                   required aria-describedby="error-email" />
+            <span class="campo__error" id="error-email" role="alert"></span>
+          </div>
+
+          <div class="campo">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" rows="5"
+                      required minlength="10" aria-describedby="error-mensaje"></textarea>
+            <span class="campo__error" id="error-mensaje" role="alert"></span>
+          </div>
+
+          <button type="submit" class="boton boton--primario">Enviar mensaje</button>
+
+          <!-- Mensaje de resultado (lo rellena JavaScript). role=status = región activa. -->
+          <p class="formulario__resultado" id="resultadoForm" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================ FOOTER (idéntico en todas las páginas) ============================================================ -->
+  <footer class="pie" role="contentinfo">
+    <div class="contenedor pie__interior">
+
+      <nav class="pie__mapa" aria-label="Mapa del sitio">
+        <div class="pie__columna">
+          <h2 class="pie__titulo">Navegación</h2>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="capitulos.html">Capítulos</a></li>
+            <li><a href="historia.html">Historia</a></li>
+            <li><a href="galeria.html">Galería</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="pie__columna pie__columna--capitulos">
+          <h2 class="pie__titulo">Capítulos</h2>
+          <ul>
+            <li><a href="capitulos.html#cap-1">01 Currahee</a></li>
+            <li><a href="capitulos.html#cap-2">02 El día de días</a></li>
+            <li><a href="capitulos.html#cap-3">03 Carentan</a></li>
+            <li><a href="capitulos.html#cap-4">04 Reemplazos</a></li>
+            <li><a href="capitulos.html#cap-5">05 Encrucijada</a></li>
+            <li><a href="capitulos.html#cap-6">06 Bastogne</a></li>
+            <li><a href="capitulos.html#cap-7">07 El punto de ruptura</a></li>
+            <li><a href="capitulos.html#cap-8">08 La última patrulla</a></li>
+            <li><a href="capitulos.html#cap-9">09 Por qué luchamos</a></li>
+            <li><a href="capitulos.html#cap-10">10 Puntos</a></li>
+          </ul>
+        </div>
+
+        <div class="pie__columna">
+          <h2 class="pie__titulo">Síguenos</h2>
+          <ul class="redes" aria-label="Redes sociales">
+            <li><a href="#" class="redes__enlace" aria-label="Perfil en X (Twitter)"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="#" class="redes__enlace" aria-label="Página en Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a></li>
+            <li><a href="#" class="redes__enlace" aria-label="Perfil en Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a></li>
+            <li><a href="#" class="redes__enlace" aria-label="Canal en YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="pie__base">
+        <p class="pie__creditos">
+          &copy; <span id="anio">2026</span> Prototipo web &laquo;Band of Brothers&raquo;.
+          Proyecto académico sin ánimo de lucro. Todas las marcas y el material audiovisual
+          pertenecen a sus respectivos titulares (HBO / DreamWorks / Playtone).
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js" defer></script>
+</body>
+</html>

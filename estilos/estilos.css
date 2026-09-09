@@ -1,0 +1,1405 @@
+/* ============================================================================
+   BAND OF BROTHERS · Hoja de estilos
+   ----------------------------------------------------------------------------
+   Metodología: Mobile First. Primero los estilos para móvil y luego se
+   amplían con @media (min-width: ...).
+   Índice:
+     1. Variables (paleta, tipografía, medidas)
+     2. Reset y base
+     3. Utilidades / layout (contenedor, botones, accesibilidad)
+     4. Cabecera y navegación (+ menú hamburguesa)
+     5. Hero
+     6. Secciones genéricas
+     7. Capítulos (héroe-slider + sinopsis)
+     7 bis. Historia (bloques de texto)
+     8. Galería (filtros + CSS Grid + modal)
+     9. Formulario de contacto
+    10. Footer
+    11. Media queries (tablet / escritorio)
+    12. Preferencias de movimiento reducido
+   ========================================================================== */
+
+/* ============================================================
+   1. VARIABLES CSS  ·  Paleta sobria / militar
+   ============================================================ */
+:root {
+  /* --- Colores base --- */
+  --c-negro:        #0e0f0a;   /* fondo más oscuro */
+  --c-gris-oscuro:  #1a1c12;   /* fondos de sección oscura */
+  --c-verde-oliva:  #4b5320;   /* color institucional */
+  --c-verde-claro:  #6b7436;   /* hover / detalles */
+  --c-caqui:        #b3a06b;   /* texto destacado suave */
+  --c-arena:        #e8e2d0;   /* texto principal sobre oscuro */
+  --c-hueso:        #f4f1e6;   /* fondos claros */
+  --c-acento:       #c9a227;   /* dorado: enlaces, focos, bordes */
+
+  /* --- Roles semánticos --- */
+  --fondo:          var(--c-hueso);
+  --fondo-alt:      #ded9c6;
+  --texto:          #23241c;
+  --texto-tenue:    #55564a;
+  --borde:          #c7c1ab;
+
+  /* --- Tipografía --- */
+  --tipo-titulo: "Playfair Display", "Times New Roman", Georgia, serif;
+  --tipo-texto:  "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --tipo-informe: "Special Elite", "Courier New", Courier, monospace; /* texto "mecanografiado" del informe de Resumen */
+  --c-sello: #8a3a2a; /* tinta roja desvaída del sello "Clasificado" */
+
+  /* --- Medidas --- */
+  --ancho-max: 1180px;
+  --radio: 2px;                /* esquinas casi rectas: estética militar */
+  --transicion: 200ms ease;
+  --sombra: 0 6px 24px rgba(0, 0, 0, 0.35);
+  --alto-cabecera: 64px;
+}
+
+/* ============================================================
+   2. RESET Y BASE
+   ============================================================ */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  /* Compensa la cabecera fija al saltar a un ancla */
+  scroll-padding-top: calc(var(--alto-cabecera) + 12px);
+}
+
+body {
+  font-family: var(--tipo-texto);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--texto);
+  background: var(--fondo);
+  -webkit-font-smoothing: antialiased;
+
+  /* Sitio multipágina: cabecera arriba, contenido flexible, footer al fondo */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El <main> ocupa todo el espacio libre para que el footer no "suba" en
+   páginas de poco contenido */
+main { flex: 1 0 auto; }
+
+/* Fondo de página completo en las páginas con sección oscura / alterna,
+   para que no aparezcan franjas del color de fondo por debajo */
+.pagina--oscura { background: var(--c-gris-oscuro); }
+.pagina--alt    { background: var(--fondo-alt); }
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1, h2, h3 {
+  font-family: var(--tipo-titulo);
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+
+a { color: inherit; }
+
+button { font: inherit; cursor: pointer; }
+
+/* Foco visible y coherente en todo el sitio (accesibilidad de teclado) */
+:focus-visible {
+  outline: 3px solid var(--c-acento);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   3. UTILIDADES / LAYOUT
+   ============================================================ */
+
+/* Contenedor centrado con margen lateral fluido */
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2.5rem);
+}
+
+/* Enlace "saltar al contenido": oculto hasta recibir foco */
+.salto-contenido {
+  position: absolute;
+  left: 8px;
+  top: -100px;
+  z-index: 999;
+  background: var(--c-acento);
+  color: var(--c-negro);
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  border-radius: var(--radio);
+  transition: top var(--transicion);
+}
+.salto-contenido:focus { top: 8px; }
+
+/* Botones */
+.boton {
+  display: inline-block;
+  padding: 0.7rem 1.6rem;
+  font-family: var(--tipo-texto);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: var(--radio);
+  transition: background var(--transicion), color var(--transicion),
+              border-color var(--transicion), transform var(--transicion);
+}
+.boton:active { transform: translateY(1px); }
+
+.boton--primario {
+  background: var(--c-verde-oliva);
+  color: var(--c-arena);
+  border-color: var(--c-verde-oliva);
+}
+.boton--primario:hover { background: var(--c-verde-claro); border-color: var(--c-verde-claro); }
+
+.boton--fantasma {
+  background: transparent;
+  color: var(--c-arena);
+  border-color: var(--c-arena);
+}
+.boton--fantasma:hover { background: var(--c-arena); color: var(--c-negro); }
+
+/* ============================================================
+   4. CABECERA Y NAVEGACIÓN
+   ============================================================ */
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(14, 15, 10, 0.95);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.35);
+  backdrop-filter: blur(4px);
+}
+
+.cabecera__interior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--alto-cabecera);
+  gap: 1rem;
+}
+
+/* Marca (logo + título) */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--c-arena);
+}
+.marca__logo { width: auto; height: 34px; }
+.marca__texto {
+  font-family: var(--tipo-titulo);
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Botón hamburguesa (visible solo en móvil) */
+.hamburguesa {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0 10px;
+  background: transparent;
+  border: 1px solid rgba(232, 226, 208, 0.4);
+  border-radius: var(--radio);
+
+  /* La cabecera es flex con 3 hijos (.marca, .hamburguesa, .navegacion).
+     El <nav> queda vacío en móvil porque el menú está en position:fixed,
+     así que este margen automático empuja el botón hasta el borde derecho. */
+  margin-left: auto;
+  flex-shrink: 0;
+}
+/* El contenedor del <nav> no debe ocupar espacio a la derecha del botón en móvil */
+.navegacion { display: flex; }
+.hamburguesa__barra {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--c-arena);
+  transition: transform var(--transicion), opacity var(--transicion);
+}
+/* Animación a "X" cuando el menú está abierto (clase la pone el JS en <body>) */
+body.menu-abierto .hamburguesa__barra:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+body.menu-abierto .hamburguesa__barra:nth-child(2) { opacity: 0; }
+body.menu-abierto .hamburguesa__barra:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Menú: en móvil es un panel EXTENSIBLE que se despliega hacia abajo.
+   Plegado -> max-height: 0 (oculto). Desplegado (body.menu-abierto)
+   -> max-height amplia + opacidad, con transición suave de "acordeón". */
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+
+  position: fixed;
+  inset: var(--alto-cabecera) 0 auto 0;
+  background: var(--c-gris-oscuro);
+  border-bottom: 2px solid var(--c-acento);
+
+  /* Estado plegado */
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 340ms ease, opacity 220ms ease, visibility 0s linear 340ms;
+}
+/* Estado desplegado */
+body.menu-abierto .menu {
+  max-height: min(80vh, 420px);
+  opacity: 1;
+  visibility: visible;
+  overflow-y: auto;
+  transition: max-height 340ms ease, opacity 220ms ease, visibility 0s;
+}
+
+.menu__enlace {
+  display: block;
+  padding: 1rem clamp(1rem, 4vw, 2.5rem);
+  color: var(--c-arena);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-top: 1px solid rgba(232, 226, 208, 0.12);
+  transition: background var(--transicion), color var(--transicion);
+}
+.menu__enlace:hover,
+.menu__enlace.activo {
+  background: var(--c-verde-oliva);
+  color: var(--c-hueso);
+}
+
+/* ---------- Submenú de "Capítulos" ---------- */
+
+/* En móvil, la fila agrupa el enlace principal + el botón chevron */
+.menu__fila {
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid rgba(232, 226, 208, 0.12);
+}
+.menu__fila .menu__enlace {
+  flex: 1;
+  border-top: 0;
+}
+
+/* Botón que despliega el submenú (imprescindible en móvil, decorativo en escritorio) */
+.submenu__toggle {
+  flex-shrink: 0;
+  width: 52px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--c-arena);
+  border: 0;
+  border-left: 1px solid rgba(232, 226, 208, 0.12);
+  font-size: 0.85rem;
+  transition: transform var(--transicion), background var(--transicion);
+}
+.submenu__toggle:hover { background: rgba(255, 255, 255, 0.06); }
+.menu__item--drop.abierto .submenu__toggle { transform: rotate(180deg); }
+
+/* Submenú: en móvil es un acordeón (se pliega con max-height) */
+.submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 320ms ease;
+}
+.menu__item--drop.abierto .submenu { max-height: 40rem; }
+
+.submenu__enlace {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.7rem clamp(1rem, 4vw, 2.5rem) 0.7rem 2.4rem;
+  color: var(--c-arena);
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  border-top: 1px solid rgba(232, 226, 208, 0.08);
+  transition: background var(--transicion), color var(--transicion);
+}
+.submenu__enlace:hover,
+.submenu__enlace:focus-visible {
+  background: var(--c-verde-oliva);
+  color: var(--c-hueso);
+}
+.submenu__num {
+  font-family: var(--tipo-titulo);
+  color: var(--c-acento);
+}
+
+/* ============================================================
+   5. HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: min(82vh, 720px);
+  padding-block: 4rem;
+  background: var(--c-negro) url("../img/hero.jpg") center / cover no-repeat;
+  color: var(--c-arena);
+  text-align: center;
+}
+/* Capa de oscurecimiento para asegurar contraste del texto. Termina en el
+   mismo gris oscuro sólido que usa la sección siguiente (.seccion--oscura),
+   para que la transición entre ambas se sienta continua en vez de un
+   corte brusco. */
+.hero__capa {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+              rgba(26, 28, 18, 0.55), rgba(26, 28, 18, 1));
+}
+.hero__contenido { position: relative; }
+
+.hero__antetitulo {
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.85rem;
+  color: var(--c-acento);
+  margin-bottom: 0.8rem;
+}
+.hero__titulo {
+  font-size: clamp(2.6rem, 9vw, 5.5rem);
+  text-transform: uppercase;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7);
+}
+.hero__disponible {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 1.4rem 0 2rem;
+  padding: 0.55rem 1.2rem;
+  border: 1px solid var(--c-acento);
+  border-radius: 999px;
+  background: rgba(201, 162, 39, 0.12);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.85rem;
+  color: var(--c-arena);
+}
+.hero__disponible i { color: var(--c-acento); }
+.hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* ============================================================
+   6. SECCIONES GENÉRICAS
+   ============================================================ */
+.seccion { padding-block: clamp(3rem, 8vw, 5.5rem); }
+.seccion--oscura {
+  background: var(--c-gris-oscuro);
+  color: var(--c-arena);
+}
+
+.seccion__cabecera {
+  text-align: center;
+  max-width: 58ch;
+  margin: 0 auto clamp(2rem, 5vw, 3rem);
+}
+/* Variante alineada a la izquierda, para secciones con imagen al lado */
+.seccion__cabecera--izq {
+  text-align: left;
+  max-width: none;
+  margin: 0 0 1.4rem;
+}
+.seccion__titulo {
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.6rem;
+}
+/* Subrayado dorado corto bajo el título */
+.seccion__titulo::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 64px;
+  height: 3px;
+  background: var(--c-acento);
+  transform: translateX(-50%);
+}
+.seccion__intro { margin-top: 1rem; color: var(--texto-tenue); }
+.seccion--oscura .seccion__intro { color: var(--c-caqui); }
+
+/* ============================================================
+   7. CAPÍTULOS  ·  Héroe-slider (el fondo cambia por capítulo) + sinopsis
+   ============================================================ */
+/* Variante de héroe que actúa como slider: los fondos son capas
+   absolutas que se cruzan con opacidad; el <section> ya es
+   position:relative por la regla base .hero. */
+.hero--slider { min-height: min(80vh, 760px); padding-block: 4rem 5rem; }
+/* El título del héroe va alineado a la izquierda (no centrado como en
+   el héroe de portada), igual que en la ficha de HBO Max. HBO no limita
+   el ancho de esa zona de texto al ancho máximo del sitio: queda pegada
+   al borde real de la pantalla con un margen fijo. Por eso aquí se anula
+   el centrado y el max-width que trae .contenedor. */
+.hero--slider .hero__contenido {
+  text-align: left;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+/* Superposición inspirada en las fichas de HBO Max: la foto se ve nítida
+   arriba (sin oscurecerla) y solo se apaga con un degradado concentrado
+   en la mitad inferior, donde vive el texto y los indicadores. */
+.hero--slider .hero__capa {
+  background: linear-gradient(to bottom,
+    rgba(26, 28, 18, 0)    0%,
+    rgba(26, 28, 18, 0.12) 22%,
+    rgba(26, 28, 18, 0.62) 68%,
+    rgba(26, 28, 18, 1)    100%);
+}
+/* El héroe termina en el mismo gris oscuro que usan las secciones
+   oscuras del sitio (p. ej. galeria.html), y la sección siguiente
+   comparte ese fondo, así que ya no hay un cambio de color brusco
+   entre ambos: la única transición es el propio degradado del héroe. */
+.seccion--continua-heroe {
+  position: relative;
+  background: var(--c-gris-oscuro);
+  color: var(--c-arena);
+}
+.seccion--continua-heroe .sinopsis__texto { color: var(--c-caqui); }
+/* Las flechas van pegadas al borde del héroe (no de un .contenedor con
+   relleno), así que se reposicionan hacia adentro para no sobresalir del
+   viewport y generar una barra de desplazamiento horizontal. Además, al
+   quedar el título pegado al borde izquierdo (igual que HBO Max), se
+   bajan al pie del héroe para no superponerse con el texto. */
+.hero--slider .slider__flecha {
+  top: auto;
+  bottom: 28px;
+  transform: none;
+}
+.hero--slider .slider__flecha--prev { left: 12px; }
+.hero--slider .slider__flecha--next { right: 12px; }
+@media (min-width: 720px) {
+  .hero--slider .slider__flecha--prev { left: 24px; }
+  .hero--slider .slider__flecha--next { right: 24px; }
+}
+
+.hero-slider__fondos {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.hero-slider__fondo {
+  position: absolute;
+  inset: 0;
+  /* El JS asigna aquí la background-image; los dos pseudoelementos la
+     heredan. Esta capa propia queda tapada por ::before, así que su
+     background-size no se llega a ver. */
+  background-size: cover;
+  background-position: center;
+  background-color: var(--c-negro);
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+/* Ambas capas comparten la misma foto del padre */
+.hero-slider__fondo::before,
+.hero-slider__fondo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Relleno: copia ampliada y desenfocada, para que no queden franjas negras */
+.hero-slider__fondo::before {
+  background-size: cover;
+  filter: blur(28px) brightness(0.45);
+  transform: scale(1.15);
+}
+
+/* Foto completa y nítida, encima del relleno */
+.hero-slider__fondo::after {
+  background-size: cover;
+  background-position: center top;
+}
+.hero-slider__fondo--activo { opacity: 1; }
+
+.hero-slider__panel { margin-top: 1.6rem; }
+.hero-slider__numero {
+  display: block;
+  font-family: var(--tipo-titulo);
+  font-size: 1.05rem;
+  letter-spacing: 0.3em;
+  color: var(--c-acento);
+  margin-bottom: 0.5rem;
+}
+.hero-slider__titulo {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.hero-slider__desc {
+  max-width: 60ch;
+  margin-inline: auto;
+  color: var(--c-hueso);
+}
+
+/* Flechas prev/next */
+.slider__flecha {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: rgba(14, 15, 10, 0.6);
+  border: 1px solid rgba(201, 162, 39, 0.5);
+  border-radius: 50%;
+  color: var(--c-arena);
+  font-size: 1.1rem;
+  transition: background var(--transicion), color var(--transicion);
+  z-index: 5;
+}
+.slider__flecha:hover { background: var(--c-acento); color: var(--c-negro); }
+.slider__flecha--prev { left: -8px; }
+.slider__flecha--next { right: -8px; }
+
+@media (min-width: 720px) {
+  .slider__flecha--prev { left: -22px; }
+  .slider__flecha--next { right: -22px; }
+}
+
+/* Indicadores numerados: flotan sobre el borde inferior del héroe */
+.hero-slider__indicadores {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-inline: 1rem;
+  z-index: 5;
+}
+.slider__punto {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid rgba(232, 226, 208, 0.4);
+  border-radius: 50%;
+  color: var(--c-caqui);
+  font-size: 0.8rem;
+  transition: background var(--transicion), color var(--transicion), border-color var(--transicion);
+}
+.slider__punto:hover { border-color: var(--c-acento); color: var(--c-arena); }
+.slider__punto--activo {
+  background: var(--c-acento);
+  border-color: var(--c-acento);
+  color: var(--c-negro);
+  font-weight: 700;
+}
+
+/* Sinopsis del capítulo activo (se actualiza al mover el slider) */
+.sinopsis { display: grid; gap: 1.5rem; align-items: start; }
+.sinopsis__numero {
+  font-family: var(--tipo-titulo);
+  font-size: 3.2rem;
+  color: var(--c-acento);
+  line-height: 1;
+}
+.sinopsis__titulo { margin-bottom: 0.8rem; }
+.sinopsis__texto { color: var(--texto-tenue); max-width: 65ch; }
+
+@media (min-width: 640px) {
+  .sinopsis { grid-template-columns: auto 1fr; }
+}
+
+/* ============================================================
+   7 bis. HISTORIA  ·  bloques de texto (CSS Grid en escritorio)
+   ============================================================ */
+/* Variante de sección con fondo ligeramente distinto para dar ritmo visual */
+.seccion--alt { background: var(--fondo-alt); }
+
+.historia__contenido {
+  display: grid;
+  gap: 1.5rem;
+  /* Móvil: una columna. Escritorio: dos (ver media query de más abajo). */
+  grid-template-columns: 1fr;
+}
+
+.historia__bloque {
+  padding: 1.5rem 1.6rem;
+  background: var(--c-hueso);
+  border: 1px solid var(--borde);
+  border-left: 4px solid var(--c-verde-oliva);
+  border-radius: var(--radio);
+}
+.historia__subtitulo {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  color: var(--texto);
+}
+.historia__bloque p {
+  color: var(--texto-tenue);
+  font-size: 1.02rem;
+  text-align: justify;
+}
+.historia__bloque em { color: var(--texto); font-style: italic; }
+
+@media (min-width: 860px) {
+  .historia__contenido { grid-template-columns: 1fr 1fr; }
+}
+
+/* ============================================================
+   7 ter. TRÁILER  ·  miniatura de YouTube (a la manera de las fichas de
+   tráiler de Marvel) que da paso al iframe real al reproducir
+   ============================================================ */
+.trailer__marco {
+  position: relative;
+  display: block;
+  max-width: 1200px;
+  margin-inline: auto;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radio);
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  box-shadow: var(--sombra);
+  background: var(--c-negro);
+}
+/* Botón que cubre toda la miniatura mientras no se ha reproducido */
+.trailer__disparador {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.trailer__disparador:focus-visible { outline: 3px solid var(--c-acento); outline-offset: -3px; }
+.trailer__imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transicion);
+}
+.trailer__disparador:hover .trailer__imagen,
+.trailer__disparador:focus-visible .trailer__imagen { transform: scale(1.03); }
+
+/* Franja superpuesta con logo + título, como la cabecera de un vídeo de
+   YouTube incrustado */
+.trailer__superpuesto {
+  position: absolute;
+  inset: 0 0 auto 0;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.9rem clamp(1rem, 3vw, 1.6rem);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent);
+  text-align: left;
+}
+.trailer__canal-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 50%;
+  background: var(--c-hueso);
+  padding: 4px;
+  flex-shrink: 0;
+}
+.trailer__superpuesto-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  color: var(--c-hueso);
+  line-height: 1.25;
+}
+.trailer__superpuesto-texto strong {
+  font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+  font-weight: 700;
+}
+.trailer__superpuesto-texto small {
+  font-size: 0.8rem;
+  color: var(--c-caqui);
+}
+
+/* Botón rojo de reproducir, como el de un vídeo de YouTube */
+.trailer__reproducir {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 68px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  background: rgba(21, 21, 21, 0.8);
+  border-radius: 12px;
+  color: #f4f1e6;
+  font-size: 1.7rem;
+  transition: background var(--transicion), transform var(--transicion);
+}
+.trailer__disparador:hover .trailer__reproducir,
+.trailer__disparador:focus-visible .trailer__reproducir {
+  background: #ff0000;
+  transform: scale(1.06);
+}
+
+.trailer__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ============================================================
+   7 quater. RESUMEN  ·  estilo expediente / informe de operaciones
+   de la Segunda Guerra Mundial: papel con filete doble, cabecera
+   tipo membrete, ficha mecanografiada con líneas de puntos y un
+   sello de "Clasificado" estampado en tinta roja.
+   ============================================================ */
+.informe {
+  position: relative;
+  background:
+    repeating-linear-gradient(to bottom,
+      rgba(35, 36, 28, 0.05) 0, rgba(35, 36, 28, 0.05) 1px,
+      transparent 1px, transparent 34px),
+    var(--c-hueso);
+  border: 1px solid var(--texto);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  box-shadow: var(--sombra);
+  overflow: clip;
+}
+/* Filete interior, como el marco impreso de un formulario oficial */
+.informe::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--borde);
+  pointer-events: none;
+}
+
+/* Membrete: unidad remitente + número de expediente */
+.informe__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4rem 1.5rem;
+  padding-bottom: 0.9rem;
+  margin-bottom: 1.8rem;
+  border-bottom: 2px solid var(--texto);
+  font-family: var(--tipo-informe);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.68rem;
+  color: var(--texto-tenue);
+}
+
+.informe__clasificacion {
+  font-family: var(--tipo-informe);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: var(--c-verde-oliva);
+  margin-bottom: 0.7rem;
+}
+
+/* Sello estampado, como tinta de goma sobre la fotografía adjunta */
+.informe__sello {
+  position: absolute;
+  top: 10%;
+  right: -14px;
+  padding: 0.3rem 0.7rem;
+  border: 3px solid var(--c-sello);
+  border-radius: 4px;
+  font-family: var(--tipo-informe);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+  color: var(--c-sello);
+  background: rgba(244, 241, 230, 0.55);
+  transform: rotate(-12deg);
+  opacity: 0.85;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.resumen__contenido {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+.resumen__figura { display: flex; flex-direction: column; gap: 0.6rem; justify-self: center; }
+.resumen__foto { position: relative; }
+/* Cinta adhesiva en las esquinas superiores, como una foto grapada al expediente */
+.resumen__foto::before,
+.resumen__foto::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  width: 42px;
+  height: 16px;
+  background: rgba(232, 226, 208, 0.65);
+  border: 1px solid rgba(35, 36, 28, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.resumen__foto::before { left: -8px;  transform: rotate(-9deg); }
+.resumen__foto::after  { right: -8px; transform: rotate(8deg); }
+.resumen__imagen {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  filter: sepia(0.35) contrast(1.05) brightness(0.97);
+  transform: rotate(-1.5deg);
+}
+.resumen__pie-foto {
+  font-family: var(--tipo-informe);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.62rem;
+  color: var(--texto-tenue);
+  text-align: center;
+}
+.resumen__sinopsis {
+  font-family: var(--tipo-informe);
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--texto);
+  margin-bottom: 1.9rem;
+}
+
+/* Ficha técnica: productores, reparto, cadena, estreno — como los
+   campos rellenados a máquina de un formulario militar */
+.resumen__ficha {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+.resumen__dato {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dotted var(--borde);
+}
+.resumen__dato dt {
+  font-family: var(--tipo-informe);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.66rem;
+  color: var(--c-verde-oliva);
+  margin-bottom: 0.35rem;
+}
+.resumen__dato dd {
+  margin: 0;
+  font-family: var(--tipo-informe);
+  color: var(--texto);
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 560px) {
+  .resumen__ficha { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 720px) {
+  .resumen__contenido { grid-template-columns: 1fr 240px; }
+  .resumen__figura { justify-self: end; }
+}
+
+/* ============================================================
+   7 quinquies. SUCESORAS  ·  cartelera con los pósteres de las
+   miniseries hermanas (misma productora, otro frente de la guerra)
+   ============================================================ */
+.cartelera {
+  display: grid;
+  gap: 2.2rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.cartelera__item { position: relative; }
+
+.cartelera__poster {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 2 / 3;
+  border: 1px solid var(--c-acento);
+  box-shadow: var(--sombra);
+}
+.cartelera__poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transicion);
+}
+.cartelera__item:hover .cartelera__poster img,
+.cartelera__item:focus-within .cartelera__poster img { transform: scale(1.05); }
+
+/* Cinta tipo "próximamente" en la esquina del cartel */
+.cartelera__cinta {
+  position: absolute;
+  top: 18px;
+  left: -42px;
+  width: 170px;
+  padding: 0.3rem 0;
+  background: var(--c-acento);
+  color: var(--c-negro);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  transform: rotate(-40deg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.cartelera__info { padding-top: 1rem; text-align: center; }
+.cartelera__titulo {
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.cartelera__meta {
+  margin-top: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  color: var(--c-caqui);
+}
+
+@media (min-width: 620px) {
+  .cartelera { grid-template-columns: repeat(2, 1fr); max-width: none; }
+}
+
+/* ============================================================
+   8. GALERÍA
+   ============================================================ */
+
+/* --- Filtros --- */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+.filtro {
+  padding: 0.45rem 1.1rem;
+  background: transparent;
+  color: var(--c-arena);
+  border: 1px solid rgba(232, 226, 208, 0.4);
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+  transition: background var(--transicion), color var(--transicion),
+              border-color var(--transicion);
+}
+.filtro:hover { border-color: var(--c-acento); color: var(--c-acento); }
+.filtro--activo {
+  background: var(--c-acento);
+  color: var(--c-negro);
+  border-color: var(--c-acento);
+  font-weight: 600;
+}
+
+/* --- Rejilla de imágenes --- */
+.rejilla-galeria {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.galeria__item {
+  margin: 0;
+  background: var(--c-negro);
+  border: 1px solid rgba(232, 226, 208, 0.15);
+  border-radius: var(--radio);
+  overflow: hidden;
+}
+/* Botón que envuelve la imagen: ocupa todo el ancho y es accesible por teclado */
+.galeria__disparador {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+.galeria__disparador img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 350ms ease, filter 350ms ease;
+}
+.galeria__disparador:hover img,
+.galeria__disparador:focus-visible img {
+  transform: scale(1.06);
+  filter: brightness(1.1);
+}
+.galeria__item figcaption {
+  padding: 0.7rem 0.9rem;
+  font-size: 0.95rem;
+  color: var(--c-caqui);
+  letter-spacing: 0.03em;
+}
+/* Elemento oculto por el filtro */
+.galeria__item[hidden] { display: none; }
+
+/* --- Modal --- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.modal[hidden] { display: none; }
+
+.modal__fondo {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 9, 6, 0.9);
+  backdrop-filter: blur(2px);
+}
+.modal__caja {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  margin: 0;
+  background: var(--c-gris-oscuro);
+  border: 1px solid var(--c-acento);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  animation: aparecer-modal 220ms ease;
+}
+@keyframes aparecer-modal {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+.modal__img {
+  width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  background: var(--c-negro);
+}
+.modal__pie {
+  padding: 0.9rem 1.1rem;
+  color: var(--c-arena);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+.modal__cerrar {
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  background: var(--c-acento);
+  color: var(--c-negro);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: var(--sombra);
+  transition: transform var(--transicion);
+}
+.modal__cerrar:hover { transform: rotate(90deg); }
+
+/* ============================================================
+   9. FORMULARIO DE CONTACTO
+   ============================================================ */
+.contacto__interior { max-width: 620px; }
+
+.formulario { display: flex; flex-direction: column; gap: 1.2rem; }
+
+.campo { display: flex; flex-direction: column; gap: 0.35rem; }
+.campo label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.95rem;
+}
+.campo input,
+.campo textarea {
+  font: inherit;
+  padding: 0.7rem 0.85rem;
+  color: var(--texto);
+  background: #fff;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+.campo input:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: var(--c-verde-oliva);
+  box-shadow: 0 0 0 3px rgba(75, 83, 32, 0.2);
+}
+.campo textarea { resize: vertical; min-height: 120px; }
+
+/* Estado de error (lo marca el JS con aria-invalid="true") */
+.campo input[aria-invalid="true"],
+.campo textarea[aria-invalid="true"] {
+  border-color: #a3341f;
+  box-shadow: 0 0 0 3px rgba(163, 52, 31, 0.18);
+}
+.campo__error {
+  min-height: 1.1em;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #a3341f;
+}
+
+.formulario__resultado {
+  min-height: 1.2em;
+  font-weight: 600;
+}
+.formulario__resultado.ok  { color: var(--c-verde-oliva); }
+.formulario__resultado.err { color: #a3341f; }
+
+/* ============================================================
+   10. FOOTER
+   ============================================================ */
+.pie {
+  background: var(--c-negro);
+  color: var(--c-caqui);
+  padding-block: 2rem;
+  border-top: 1px solid rgba(201, 162, 39, 0.3);
+}
+.pie__interior {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+/* --- Mapa del sitio --- */
+.pie__mapa {
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: 1fr;
+}
+.pie__titulo {
+  font-family: var(--tipo-titulo);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--c-acento);
+  margin-bottom: 0.7rem;
+}
+.pie__columna ul {
+  list-style: none;
+  padding: 0;
+}
+.pie__columna li { margin-bottom: 0.4rem; }
+.pie__columna a {
+  text-decoration: none;
+  color: var(--c-caqui);
+  font-size: 0.92rem;
+  transition: color var(--transicion);
+}
+.pie__columna a:hover,
+.pie__columna a:focus-visible { color: var(--c-arena); }
+.pie__columna--capitulos ul { columns: 2; column-gap: 1.2rem; }
+
+/* --- Base: créditos + redes --- */
+.pie__base {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: center;
+  text-align: center;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(201, 162, 39, 0.25);
+}
+.pie__creditos { font-size: 0.92rem; max-width: 70ch; }
+
+.redes {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 0.8rem;
+}
+.redes__enlace {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: var(--c-arena);
+  border: 1px solid rgba(232, 226, 208, 0.35);
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: background var(--transicion), color var(--transicion),
+              transform var(--transicion);
+}
+.redes__enlace:hover {
+  background: var(--c-acento);
+  color: var(--c-negro);
+  transform: translateY(-3px);
+}
+
+/* ============================================================
+   11. MEDIA QUERIES
+   ============================================================ */
+
+/* --- Tablet en adelante (≥ 720px) --- */
+@media (min-width: 720px) {
+  .pie__mapa { grid-template-columns: repeat(3, 1fr); }
+  .pie__base { flex-direction: row; justify-content: space-between; text-align: left; }
+}
+
+/* --- Escritorio (≥ 900px): navegación horizontal, sin hamburguesa --- */
+@media (min-width: 900px) {
+  .hamburguesa { display: none; }
+
+  .menu {
+    position: static;
+    flex-direction: row;
+    gap: 0.4rem;
+    background: transparent;
+    border: 0;
+
+    /* En escritorio el menú siempre está visible: se anula el plegado */
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+    overflow: visible;
+    transition: none;
+  }
+  .menu__enlace {
+    border: 0;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radio);
+  }
+  .marca__texto { font-size: 1.3rem; }
+
+  /* ---------- Submenú en escritorio: aparece al pasar el ratón ---------- */
+  .menu__item--drop { position: relative; }
+
+  /* La FILA (texto + flecha) es la que se resalta: así la flecha queda
+     dentro del mismo recuadro verde que "Capítulos". */
+  .menu__fila {
+    border-top: 0;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radio);
+    transition: background var(--transicion), color var(--transicion);
+  }
+  /* El enlace interior ya no pinta su propio fondo: lo hace la fila */
+  .menu__item--drop .menu__enlace { padding: 0; }
+  .menu__item--drop .menu__enlace:hover,
+  .menu__item--drop .menu__enlace.activo { background: transparent; color: inherit; }
+
+  /* Recuadro verde sobre toda la fila al pasar el ratón / enfocar / estar activo */
+  .menu__item--drop:hover .menu__fila,
+  .menu__item--drop:focus-within .menu__fila,
+  .menu__fila:has(.menu__enlace.activo) {
+    background: var(--c-verde-oliva);
+    color: var(--c-hueso);
+  }
+
+  /* El chevron pasa a ser un simple indicador: no captura clics y hereda color */
+  .submenu__toggle {
+    width: auto;
+    padding: 0 0 0 0.4rem;
+    border-left: 0;
+    color: inherit;
+    pointer-events: none;
+  }
+  .menu__item--drop:hover .submenu__toggle,
+  .menu__item--drop:focus-within .submenu__toggle { transform: rotate(180deg); }
+
+  /* Panel flotante bajo "Capítulos" */
+  .submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 15rem;
+    padding-block: 0.35rem;      /* evita el hueco que rompería el :hover */
+    background: var(--c-gris-oscuro);
+    border: 1px solid rgba(201, 162, 39, 0.4);
+    border-top: 2px solid var(--c-acento);
+    box-shadow: var(--sombra);
+    z-index: 120;
+
+    /* Se anula el acordeón móvil; ahora se oculta con opacidad + visibilidad */
+    max-height: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity var(--transicion), transform var(--transicion),
+                visibility 0s linear var(--transicion);
+  }
+  /* Se muestra al pasar el ratón O al enfocar un elemento con el teclado */
+  .menu__item--drop:hover .submenu,
+  .menu__item--drop:focus-within .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity var(--transicion), transform var(--transicion), visibility 0s;
+  }
+  .submenu__enlace {
+    padding: 0.55rem 1.1rem;
+    border-top: 0;
+    white-space: nowrap;
+    text-transform: none;
+    letter-spacing: 0.03em;
+  }
+}
+
+/* --- Pantallas grandes (≥ 1200px) --- */
+@media (min-width: 1200px) {
+  body { font-size: 1.1rem; }
+}
+
+/* ============================================================
+   12. MOVIMIENTO REDUCIDO (accesibilidad)
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
