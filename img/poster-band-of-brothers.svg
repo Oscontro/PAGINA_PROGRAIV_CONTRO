@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="750" viewBox="0 0 500 750" role="img" aria-label="Poster ilustrativo de la miniserie Band of Brothers">
+  <!-- Marcador de posicion tipo cartel de cine. Sustituir por el poster
+       real con el mismo nombre de archivo (ver img/README.md). -->
+  <defs>
+    <linearGradient id="gbb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4b5320"/>
+      <stop offset="0.55" stop-color="#1a1c12"/>
+      <stop offset="1" stop-color="#0e0f0a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="750" fill="url(#gbb)"/>
+  <rect x="14" y="14" width="472" height="722" fill="none" stroke="#c9a227" stroke-width="3" opacity="0.55"/>
+
+  <!-- siluetas de paracaidistas, esquematicas -->
+  <g fill="#0e0f0a" opacity="0.6">
+    <circle cx="120" cy="470" r="16"/>
+    <rect x="112" y="486" width="16" height="60" rx="4"/>
+    <circle cx="190" cy="450" r="16"/>
+    <rect x="182" y="466" width="16" height="60" rx="4"/>
+    <circle cx="260" cy="470" r="16"/>
+    <rect x="252" y="486" width="16" height="60" rx="4"/>
+    <circle cx="330" cy="452" r="16"/>
+    <rect x="322" y="468" width="16" height="60" rx="4"/>
+    <circle cx="390" cy="472" r="16"/>
+    <rect x="382" y="488" width="16" height="60" rx="4"/>
+  </g>
+  <path d="M0 560 L500 560 L500 750 L0 750 Z" fill="#0e0f0a" opacity="0.55"/>
+
+  <text x="250" y="120" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="18" letter-spacing="6" fill="#c9a227">HBO &#183; MINISERIE ORIGINAL</text>
+  <text x="250" y="660" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700" fill="#f4f1e6">BAND OF BROTHERS</text>
+  <text x="250" y="696" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#e8e2d0" opacity="0.85">De Camp Toccoa al Nido del Aguila</text>
+</svg>

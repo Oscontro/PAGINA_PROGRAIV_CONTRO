@@ -15,6 +15,7 @@
      8. Galería (filtros + CSS Grid + modal)
      9. Formulario de contacto
     10. Footer
+    10 bis. Botón "volver arriba"
     11. Media queries (tablet / escritorio)
     12. Preferencias de movimiento reducido
    ========================================================================== */
@@ -30,7 +31,7 @@
   --c-verde-claro:  #6b7436;   /* hover / detalles */
   --c-caqui:        #b3a06b;   /* texto destacado suave */
   --c-arena:        #e8e2d0;   /* texto principal sobre oscuro */
-  --c-hueso:        #f4f1e6;   /* fondos claros */
+  --c-hueso:        #c4bea9;   /* fondos claros */
   --c-acento:       #c9a227;   /* dorado: enlaces, focos, bordes */
 
   /* --- Roles semánticos --- */
@@ -44,14 +45,13 @@
   --tipo-titulo: "Playfair Display", "Times New Roman", Georgia, serif;
   --tipo-texto:  "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
   --tipo-informe: "Special Elite", "Courier New", Courier, monospace; /* texto "mecanografiado" del informe de Resumen */
-  --c-sello: #8a3a2a; /* tinta roja desvaída del sello "Clasificado" */
 
   /* --- Medidas --- */
-  --ancho-max: 1180px;
+  --ancho-max: 900px;
   --radio: 2px;                /* esquinas casi rectas: estética militar */
   --transicion: 200ms ease;
   --sombra: 0 6px 24px rgba(0, 0, 0, 0.35);
-  --alto-cabecera: 64px;
+  --alto-cabecera: 90px;
 }
 
 /* ============================================================
@@ -359,13 +359,15 @@ body.menu-abierto .menu {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: min(82vh, 720px);
-  padding-block: 4rem;
-  background: var(--c-negro) url("../img/hero.jpg") center / cover no-repeat;
+  min-height: min(80vh, 760px);
+  padding-top: 2rem;
+  background: var(--c-negro) url("../img/hero2.webp") center / cover no-repeat;
   color: var(--c-arena);
   text-align: center;
 }
-/* Capa de oscurecimiento para asegurar contraste del texto. Termina en el
+/* Capa de oscurecimiento, al estilo de las fichas de HBO Max: la foto se
+   ve nítida arriba (sin oscurecerla) y solo se apaga con un degradado
+   concentrado en la mitad inferior, donde vive el texto. Termina en el
    mismo gris oscuro sólido que usa la sección siguiente (.seccion--oscura),
    para que la transición entre ambas se sienta continua en vez de un
    corte brusco. */
@@ -373,7 +375,10 @@ body.menu-abierto .menu {
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom,
-              rgba(26, 28, 18, 0.55), rgba(26, 28, 18, 1));
+    rgba(26, 28, 18, 0)    0%,
+    rgba(26, 28, 18, 0.12) 22%,
+    rgba(26, 28, 18, 0.62) 68%,
+    rgba(26, 28, 18, 1)    100%);
 }
 .hero__contenido { position: relative; }
 
@@ -414,7 +419,13 @@ body.menu-abierto .menu {
 /* ============================================================
    6. SECCIONES GENÉRICAS
    ============================================================ */
-.seccion { padding-block: clamp(3rem, 8vw, 5.5rem); }
+.seccion {
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+}
+/* La sección justo debajo del héroe no necesita su propio colchón
+   superior: el héroe ya separa visualmente el contenido. */
+.seccion--sin-padding-top { padding-top: 0; }
 .seccion--oscura {
   background: var(--c-gris-oscuro);
   color: var(--c-arena);
@@ -425,7 +436,8 @@ body.menu-abierto .menu {
   max-width: 58ch;
   margin: 0 auto clamp(2rem, 5vw, 3rem);
 }
-/* Variante alineada a la izquierda, para secciones con imagen al lado */
+/* Variante alineada a la izquierda (Tráiler, Resumen y "La saga continúa"
+   en index.html) */
 .seccion__cabecera--izq {
   text-align: left;
   max-width: none;
@@ -437,6 +449,7 @@ body.menu-abierto .menu {
   position: relative;
   display: inline-block;
   padding-bottom: 0.6rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 /* Subrayado dorado corto bajo el título */
 .seccion__titulo::after {
@@ -459,27 +472,6 @@ body.menu-abierto .menu {
    absolutas que se cruzan con opacidad; el <section> ya es
    position:relative por la regla base .hero. */
 .hero--slider { min-height: min(80vh, 760px); padding-block: 4rem 5rem; }
-/* El título del héroe va alineado a la izquierda (no centrado como en
-   el héroe de portada), igual que en la ficha de HBO Max. HBO no limita
-   el ancho de esa zona de texto al ancho máximo del sitio: queda pegada
-   al borde real de la pantalla con un margen fijo. Por eso aquí se anula
-   el centrado y el max-width que trae .contenedor. */
-.hero--slider .hero__contenido {
-  text-align: left;
-  max-width: none;
-  margin-inline: 0;
-  padding-inline: clamp(1.25rem, 4vw, 3rem);
-}
-/* Superposición inspirada en las fichas de HBO Max: la foto se ve nítida
-   arriba (sin oscurecerla) y solo se apaga con un degradado concentrado
-   en la mitad inferior, donde vive el texto y los indicadores. */
-.hero--slider .hero__capa {
-  background: linear-gradient(to bottom,
-    rgba(26, 28, 18, 0)    0%,
-    rgba(26, 28, 18, 0.12) 22%,
-    rgba(26, 28, 18, 0.62) 68%,
-    rgba(26, 28, 18, 1)    100%);
-}
 /* El héroe termina en el mismo gris oscuro que usan las secciones
    oscuras del sitio (p. ej. galeria.html), y la sección siguiente
    comparte ese fondo, así que ya no hay un cambio de color brusco
@@ -645,6 +637,25 @@ body.menu-abierto .menu {
 
 @media (min-width: 640px) {
   .sinopsis { grid-template-columns: auto 1fr; }
+}
+
+/* Personaje destacado del capítulo activo (se actualiza junto al slider) */
+.destacado { display: grid; gap: 1.5rem; align-items: start; }
+.destacado__icono {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--c-acento);
+  color: var(--c-negro);
+  font-size: 1.4rem;
+}
+.destacado__nombre { text-transform: uppercase; margin-bottom: 0.6rem; }
+.destacado__texto { color: var(--texto-tenue); max-width: 65ch; }
+
+@media (min-width: 640px) {
+  .destacado { grid-template-columns: auto 1fr; }
 }
 
 /* ============================================================
@@ -839,64 +850,29 @@ body.menu-abierto .menu {
   margin-bottom: 0.7rem;
 }
 
-/* Sello estampado, como tinta de goma sobre la fotografía adjunta */
-.informe__sello {
-  position: absolute;
-  top: 10%;
-  right: -14px;
-  padding: 0.3rem 0.7rem;
-  border: 3px solid var(--c-sello);
-  border-radius: 4px;
-  font-family: var(--tipo-informe);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.74rem;
-  color: var(--c-sello);
-  background: rgba(244, 241, 230, 0.55);
-  transform: rotate(-12deg);
-  opacity: 0.85;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
 .resumen__contenido {
   display: grid;
   gap: 2rem;
   align-items: start;
 }
-.resumen__figura { display: flex; flex-direction: column; gap: 0.6rem; justify-self: center; }
-.resumen__foto { position: relative; }
-/* Cinta adhesiva en las esquinas superiores, como una foto grapada al expediente */
-.resumen__foto::before,
-.resumen__foto::after {
-  content: "";
-  position: absolute;
-  top: -10px;
-  width: 42px;
-  height: 16px;
-  background: rgba(232, 226, 208, 0.65);
-  border: 1px solid rgba(35, 36, 28, 0.15);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-.resumen__foto::before { left: -8px;  transform: rotate(-9deg); }
-.resumen__foto::after  { right: -8px; transform: rotate(8deg); }
-.resumen__imagen {
+.resumen__figura { display: flex; flex-direction: column; gap: 0.7rem; justify-self: center; }
+/* Marco de póster: passe-partout dorado alrededor del cartel de la serie,
+   como el cuadro enmarcado de una ficha de película. */
+.resumen__poster-marco {
+  position: relative;
   display: block;
   width: 100%;
-  max-width: 260px;
-  border: 1px solid var(--borde);
-  border-radius: var(--radio);
+  max-width: 340px;
+  padding: 10px;
+  background: var(--c-acento);
   box-shadow: var(--sombra);
-  filter: sepia(0.35) contrast(1.05) brightness(0.97);
-  transform: rotate(-1.5deg);
 }
-.resumen__pie-foto {
-  font-family: var(--tipo-informe);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 0.62rem;
-  color: var(--texto-tenue);
-  text-align: center;
+.resumen__poster-imagen {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(14, 15, 10, 0.4);
 }
 .resumen__sinopsis {
   font-family: var(--tipo-informe);
@@ -939,7 +915,7 @@ body.menu-abierto .menu {
 }
 
 @media (min-width: 720px) {
-  .resumen__contenido { grid-template-columns: 1fr 240px; }
+  .resumen__contenido { grid-template-columns: 1fr 340px; }
   .resumen__figura { justify-self: end; }
 }
 
@@ -1197,6 +1173,12 @@ body.menu-abierto .menu {
 .formulario__resultado.ok  { color: var(--c-verde-oliva); }
 .formulario__resultado.err { color: #a3341f; }
 
+/* Sobre fondo oscuro (contacto.html), el rojo y el verde oscuros pierden
+   contraste: se aclaran para seguir siendo legibles. */
+.seccion--oscura .campo__error,
+.seccion--oscura .formulario__resultado.err { color: #e2665a; }
+.seccion--oscura .formulario__resultado.ok  { color: var(--c-verde-claro); }
+
 /* ============================================================
    10. FOOTER
    ============================================================ */
@@ -1251,7 +1233,7 @@ body.menu-abierto .menu {
   padding-top: 1.6rem;
   border-top: 1px solid rgba(201, 162, 39, 0.25);
 }
-.pie__creditos { font-size: 0.92rem; max-width: 70ch; }
+.pie__creditos { font-size: 0.92rem; flex: 1 1 auto; }
 
 .redes {
   list-style: none;
@@ -1276,6 +1258,52 @@ body.menu-abierto .menu {
   background: var(--c-acento);
   color: var(--c-negro);
   transform: translateY(-3px);
+}
+
+/* ============================================================
+   10 bis. BOTÓN "VOLVER ARRIBA"
+   Parche tipo insignia de tela (fondo verde oliva, ribete dorado
+   cosido) con un solo galón — el rango más bajo, soldado raso—, cuyo
+   propio chevron hace de flecha "hacia arriba". Fijo en la esquina
+   inferior derecha; aparece con el scroll (ver JS sección 9).
+   ============================================================ */
+.volver-arriba {
+  position: fixed;
+  right: clamp(1rem, 3vw, 1.8rem);
+  bottom: clamp(1rem, 3vw, 1.8rem);
+  z-index: 90;
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  background: var(--c-verde-oliva);
+  border: 2px solid var(--c-acento);
+  border-radius: 6px;
+  box-shadow: var(--sombra);
+  color: var(--c-acento);
+  font-size: 1.15rem;
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity var(--transicion), transform var(--transicion), background var(--transicion);
+}
+.volver-arriba.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+/* Ribete interior, como la costura del parche de tela */
+.volver-arriba::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(201, 162, 39, 0.45);
+  border-radius: 3px;
+  pointer-events: none;
+}
+.volver-arriba:hover,
+.volver-arriba:focus-visible {
+  background: var(--c-verde-claro);
 }
 
 /* ============================================================

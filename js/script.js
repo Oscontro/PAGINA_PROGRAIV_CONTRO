@@ -11,11 +11,13 @@
         fuera / al pulsar un enlace).
      2. Resaltado del enlace de navegación de la página actual.
      3. Galería: filtrado por categoría.
-     4. Galería: modal para ampliar la imagen (abrir, cerrar, foco, Esc).
+     4. Galería: modal con slider para ampliar la imagen y pasar de una
+        foto a otra (abrir, cerrar, foco, flechas de teclado y Esc).
      5. Validación simple del formulario de contacto.
      6. Año dinámico en el footer.
      7. Capítulos: slider de episodios + sinopsis del capítulo activo.
      8. Tráiler: clic en la miniatura para cargar el iframe del vídeo.
+     9. Botón "volver arriba" (aparece al bajar, sube con scroll suave).
 
    Todo el código se envuelve en una IIFE para no contaminar el scope global
    y se ejecuta cuando el DOM está listo (el <script> usa "defer").
@@ -155,23 +157,49 @@
   });
 
   /* ==========================================================================
-     4. GALERÍA · MODAL DE IMAGEN AMPLIADA
+     4. GALERÍA · MODAL DE IMAGEN AMPLIADA + SLIDER
+     El modal no solo amplía la imagen pulsada: también deja pasar a la
+     foto anterior/siguiente (con las flechas del modal o las del
+     teclado) dentro del conjunto de imágenes que el filtro activo deja
+     visibles en ese momento.
      ========================================================================== */
-  const modal       = $("#modalGaleria");
-  const modalImg    = $("#modalImg");
-  const modalTitulo = $("#modalTitulo");
-  const disparadores = $$(".galeria__disparador");
-  let ultimoFoco = null; // para devolver el foco al cerrar
+  const modal        = $("#modalGaleria");
+  const modalImg      = $("#modalImg");
+  const modalTitulo   = $("#modalTitulo");
+  const modalPrev     = $("#modalPrev");
+  const modalNext     = $("#modalNext");
+  const disparadores  = $$(".galeria__disparador");
+  let ultimoFoco  = null; // para devolver el foco al cerrar
+  let indiceModal = 0;    // posición actual dentro de las imágenes visibles
 
   /**
-   * Abre el modal con la imagen indicada.
-   * @param {string} src    - ruta de la imagen.
-   * @param {string} titulo - texto del pie / alt.
+   * Devuelve los botones-disparador de las imágenes NO ocultas por el
+   * filtro de la galería (mismo orden en el que aparecen en la rejilla).
    */
-  function abrirModal(src, titulo) {
-    modalImg.src = src;
-    modalImg.alt = titulo;
-    modalTitulo.textContent = titulo;
+  function imagenesVisibles() {
+    return disparadores.filter((btn) => !btn.closest(".galeria__item").hidden);
+  }
+
+  /**
+   * Vuelca en el modal la imagen "i" (con vuelta circular) dentro del
+   * conjunto de imágenes visibles.
+   */
+  function mostrarImagenModal(i) {
+    const visibles = imagenesVisibles();
+    if (!visibles.length) return;
+    indiceModal = (i + visibles.length) % visibles.length;
+    const actual = visibles[indiceModal];
+    modalImg.src = actual.dataset.img;
+    modalImg.alt = actual.dataset.titulo;
+    modalTitulo.textContent = actual.dataset.titulo;
+  }
+
+  /**
+   * Abre el modal empezando por el disparador pulsado.
+   * @param {HTMLElement} disparador - botón de la imagen pulsada.
+   */
+  function abrirModal(disparador) {
+    mostrarImagenModal(imagenesVisibles().indexOf(disparador));
     modal.hidden = false;
     document.body.style.overflow = "hidden"; // evita scroll de fondo
     /* Lleva el foco al botón de cerrar (accesibilidad) */
@@ -188,7 +216,7 @@
   disparadores.forEach((btn) => {
     btn.addEventListener("click", function () {
       ultimoFoco = btn;
-      abrirModal(btn.dataset.img, btn.dataset.titulo);
+      abrirModal(btn);
     });
   });
 
@@ -197,9 +225,17 @@
     $$("[data-cerrar-modal]", modal).forEach((el) => {
       el.addEventListener("click", cerrarModal);
     });
-    /* Cierra con Escape */
+
+    /* Flechas del slider dentro del modal */
+    if (modalPrev) modalPrev.addEventListener("click", () => mostrarImagenModal(indiceModal - 1));
+    if (modalNext) modalNext.addEventListener("click", () => mostrarImagenModal(indiceModal + 1));
+
+    /* Teclado: Escape cierra, las flechas izquierda/derecha pasan de foto */
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !modal.hidden) cerrarModal();
+      if (modal.hidden) return;
+      if (e.key === "Escape")     cerrarModal();
+      if (e.key === "ArrowLeft")  mostrarImagenModal(indiceModal - 1);
+      if (e.key === "ArrowRight") mostrarImagenModal(indiceModal + 1);
     });
   }
 
@@ -319,6 +355,9 @@
     const panelTitulo = $("[data-sinopsis-titulo]");
     const panelTexto  = $("[data-sinopsis-texto]");
 
+    const destacadoNombre = $("[data-destacado-nombre]");
+    const destacadoTexto  = $("[data-destacado-texto]");
+
     let indice = 0;
 
     /**
@@ -338,15 +377,29 @@
       if (panelNumero) panelNumero.textContent = actual.dataset.numero;
       if (panelTitulo) panelTitulo.textContent = actual.dataset.titulo;
       if (panelTexto)  panelTexto.textContent  = actual.dataset.sinopsis;
+
+      if (destacadoNombre) destacadoNombre.textContent = actual.dataset.personaje;
+      if (destacadoTexto)  destacadoTexto.textContent  = actual.dataset.personajeTexto;
     }
 
     if (btnPrev) btnPrev.addEventListener("click", () => irACapitulo(indice - 1));
     if (btnNext) btnNext.addEventListener("click", () => irACapitulo(indice + 1));
 
-    /* Si se llega con un ancla de capítulo (p. ej. desde el submenú o el
-       footer con capitulos.html#cap-5), se abre ese capítulo directamente. */
-    const indiceInicial = datos.findIndex((li) => li.id === location.hash.slice(1));
-    irACapitulo(indiceInicial >= 0 ? indiceInicial : 0);
+    /* Activa el capítulo indicado por el hash actual de la URL (o el
+     * primero si no hay uno reconocible). Se usa tanto al cargar la
+     * página como cada vez que cambia el hash sin recargarla. */
+    function irAHashActual() {
+      const i = datos.findIndex((li) => li.id === location.hash.slice(1));
+      irACapitulo(i >= 0 ? i : 0);
+    }
+
+    irAHashActual();
+
+    /* Si ya se está en capitulos.html y se pulsa otro enlace del submenú
+       o del footer (p. ej. capitulos.html#cap-5), el navegador solo
+       cambia el hash sin recargar la página, así que hay que escuchar
+       "hashchange" para que el slider también salte a ese capítulo. */
+    window.addEventListener("hashchange", irAHashActual);
   }
 
   /* ==========================================================================
@@ -370,5 +423,29 @@
         if (reproductor.dataset.src) reproductor.src = reproductor.dataset.src;
       });
     }
+  }
+
+  /* ==========================================================================
+     9. BOTÓN "VOLVER ARRIBA"
+     Estilizado como una insignia de rango (un solo galón), así que el
+     propio chevron hace también de flecha "hacia arriba". Permanece oculto
+     hasta que se baja un tramo de la página, y al pulsarlo hace scroll
+     suave hasta el principio.
+     ========================================================================== */
+  const btnArriba = $("#btnArriba");
+
+  if (btnArriba) {
+    const UMBRAL_SCROLL = 400;
+
+    function actualizarBtnArriba() {
+      btnArriba.classList.toggle("visible", window.scrollY > UMBRAL_SCROLL);
+    }
+
+    window.addEventListener("scroll", actualizarBtnArriba, { passive: true });
+    actualizarBtnArriba();
+
+    btnArriba.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   }
 })();
