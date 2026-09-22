@@ -166,6 +166,7 @@
   const modal        = $("#modalGaleria");
   const modalImg      = $("#modalImg");
   const modalTitulo   = $("#modalTitulo");
+  const modalTituloTexto = $("#modalTituloTexto");
   const modalPrev     = $("#modalPrev");
   const modalNext     = $("#modalNext");
   const modalContador = $("#modalContador");
@@ -192,7 +193,7 @@
     const actual = visibles[indiceModal];
     modalImg.src = actual.dataset.img;
     modalImg.alt = actual.dataset.titulo;
-    modalTitulo.textContent = actual.dataset.titulo;
+    modalTituloTexto.textContent = actual.dataset.titulo;
     if (modalContador) modalContador.textContent = `${indiceModal + 1} / ${visibles.length}`;
   }
 
