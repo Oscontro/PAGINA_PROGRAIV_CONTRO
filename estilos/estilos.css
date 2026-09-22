@@ -631,7 +631,7 @@ body.menu-abierto .menu {
   font-family: var(--tipo-titulo);
   font-size: 3.2rem;
   color: var(--c-acento);
-  line-height: 1;
+  line-height: 1.15;
 }
 .sinopsis__titulo { margin-bottom: 0.8rem; }
 .sinopsis__texto { color: var(--texto-tenue); max-width: 65ch; }
@@ -688,7 +688,7 @@ body.menu-abierto .menu {
 .historia__bloque p {
   color: var(--texto-tenue);
   font-size: 1.02rem;
-  line-height: 1.75;
+  line-height: 1.15;
   text-align: justify;
 }
 .historia__bloque em { color: var(--texto); font-style: italic; }
@@ -879,7 +879,7 @@ body.menu-abierto .menu {
 .resumen__sinopsis {
   font-family: var(--tipo-informe);
   font-size: 0.92rem;
-  line-height: 1.75;
+  line-height: 1.5;
   color: var(--texto);
   margin-bottom: 1.9rem;
 }
