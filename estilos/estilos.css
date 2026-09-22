@@ -51,6 +51,7 @@
   --radio: 2px;                /* esquinas casi rectas: estética militar */
   --transicion: 200ms ease;
   --sombra: 0 6px 24px rgba(0, 0, 0, 0.35);
+  --supersombra: 0 6px 24px rgba(0, 0, 0, 1);
   --alto-cabecera: 90px;
 }
 
@@ -687,6 +688,7 @@ body.menu-abierto .menu {
 .historia__bloque p {
   color: var(--texto-tenue);
   font-size: 1.02rem;
+  line-height: 1.75;
   text-align: justify;
 }
 .historia__bloque em { color: var(--texto); font-style: italic; }
@@ -1139,7 +1141,7 @@ body.menu-abierto .menu {
   background: rgba(8, 9, 6, 0.85);
   border: 1px solid var(--c-acento);
   border-radius: 999px;
-  box-shadow: var(--sombra);
+  box-shadow: var(--supersombra);
 }
 
 /* ============================================================
