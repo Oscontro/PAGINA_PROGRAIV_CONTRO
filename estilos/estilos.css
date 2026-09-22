@@ -359,7 +359,7 @@ body.menu-abierto .menu {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: min(70vh, 520px);
+  min-height: min(70vh, 600px);
   padding-block: 2rem;
   background: var(--c-negro) url("../img/hero2.webp") center / cover no-repeat;
   color: var(--c-arena);
@@ -471,7 +471,7 @@ body.menu-abierto .menu {
 /* Variante de héroe que actúa como slider: los fondos son capas
    absolutas que se cruzan con opacidad; el <section> ya es
    position:relative por la regla base .hero. */
-.hero--slider { min-height: min(80vh, 760px); padding-block: 4rem 5rem; }
+.hero--slider { min-height: min(70vh, 600px); padding-block: 4rem 5rem; }
 /* El héroe termina en el mismo gris oscuro que usan las secciones
    oscuras del sitio (p. ej. galeria.html), y la sección siguiente
    comparte ese fondo, así que ya no hay un cambio de color brusco
