@@ -359,8 +359,8 @@ body.menu-abierto .menu {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: min(80vh, 760px);
-  padding-top: 2rem;
+  min-height: min(52vh, 480px);
+  padding-block: 2rem;
   background: var(--c-negro) url("../img/hero2.webp") center / cover no-repeat;
   color: var(--c-arena);
   text-align: center;
