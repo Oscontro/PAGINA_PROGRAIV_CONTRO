@@ -168,6 +168,7 @@
   const modalTitulo   = $("#modalTitulo");
   const modalPrev     = $("#modalPrev");
   const modalNext     = $("#modalNext");
+  const modalContador = $("#modalContador");
   const disparadores  = $$(".galeria__disparador");
   let ultimoFoco  = null; // para devolver el foco al cerrar
   let indiceModal = 0;    // posición actual dentro de las imágenes visibles
@@ -192,6 +193,7 @@
     modalImg.src = actual.dataset.img;
     modalImg.alt = actual.dataset.titulo;
     modalTitulo.textContent = actual.dataset.titulo;
+    if (modalContador) modalContador.textContent = `${indiceModal + 1} / ${visibles.length}`;
   }
 
   /**

@@ -1121,6 +1121,27 @@ body.menu-abierto .menu {
 }
 .modal__cerrar:hover { transform: rotate(90deg); }
 
+.modal__contador {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  padding: 0 0.7rem;
+  height: 36px;
+  min-width: 36px;
+  font-family: var(--tipo-titulo);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--c-arena);
+  background: rgba(8, 9, 6, 0.85);
+  border: 1px solid var(--c-acento);
+  border-radius: 999px;
+  box-shadow: var(--sombra);
+}
+
 /* ============================================================
    9. FORMULARIO DE CONTACTO
    ============================================================ */
